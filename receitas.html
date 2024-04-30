@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+    <style>
+        .bg-warning {
+            background-color: #ff4d07 !important;
+        }
+
+        #pnlCatalogo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-family: 'Jersey 15', sans-serif;
+            /* Add other font properties here, such as size and weight */
+        }
+    </style>
+</head>
+<body onload="preencheCatalogo()">
+    <div class="container-fluid bg-warning">
+        <h1>Catálogo de Receitas</h1>
+        <div id="pnlCatalogo"></div>
+    </div>
+
+    <script>
+        var receitas = [
+            {
+                "titulo": "Parmegiana Napolitano",
+                "imagem": "milanesa.png",
+                "preparo": "Preaqueça o forno a 180°C. Empanar os bifes de filé mignon em farinha de rosca e ovos batidos. Frite em óleo quente até dourar. Em um refratário, coloque uma camada de molho de tomate, os bifes empanados, uma camada de queijo mussarela e uma de presunto. Repita as camadas e finalize com queijo parmesão ralado. Leve ao forno por 20 minutos ou até gratinar.",
+                "ingredientes": ["4 bifes de filé mignon", "Farinha de rosca", "2 ovos", "Óleo para fritar", "500g de queijo mussarela", "500g de presunto", "Queijo parmesão ralado", "Molho de tomate"]
+            },
+            {
+                "titulo": "Sushi",
+                "imagem": "sushi.png",
+                "preparo": "Cozinhe o arroz japonês conforme as instruções da embalagem. Misture o vinagre de arroz, açúcar e sal em uma panela e aqueça até dissolver. Despeje a mistura sobre o arroz cozido e misture delicadamente. Espalhe o arroz sobre as folhas de alga, adicione o peixe e os outros ingredientes de sua escolha. Enrole e corte em fatias.",
+                "ingredientes": ["Arroz japonês", "Vinagre de arroz", "Açúcar", "Sal", "Alga nori", "Peixe fresco (salmão, atum, etc.)", "Legumes (pepino, abacate, cenoura, etc.)", "Molho de soja"]
+            },
+            {
+                "titulo": "Strogonoff",
+                "imagem": "strogonoff.png",
+                "preparo": "Em uma panela, refogue a cebola e o alho na manteiga até dourar. Adicione o frango ou carne e frite até dourar. Tempere com sal e pimenta a gosto. Acrescente o champignon e o molho de tomate e cozinhe por alguns minutos. Desligue o fogo e misture o creme de leite. Sirva quente, acompanhado de arroz branco e batata palha.",
+                "ingredientes": ["500g de frango ou carne", "1 cebola picada", "2 dentes de alho picados", "2 colheres de sopa de manteiga", "200g de champignon fatiado", "1 lata de molho de tomate", "1 lata de creme de leite", "Sal e pimenta a gosto"]
+            },
+            {
+                "titulo": "Feijoada",
+                "imagem": "feijoada.png",
+                "preparo": "Cozinhe as carnes em água fervente por 30 minutos. Refogue a cebola, o alho e a linguiça em óleo quente até dourar. Adicione o feijão preto, a água e as carnes cozidas. Cozinhe por mais 1 hora em fogo médio. Sirva acompanhado de arroz branco, couve refogada, laranja e farofa.",
+                "ingredientes": ["500g de feijão preto", "300g de carne seca", "200g de linguiça calabresa", "200g de carne de porco (paio, costelinha, etc.)", "1 cebola picada", "3 dentes de alho picados", "2 colheres de sopa de óleo", "Sal a gosto"]
+            }
+        ];
+
+        function getListaIngredientes(ingredientes) {
+            var lista = "<ul>";
+            lista += ingredientes.map(ingrediente => "<li>" + ingrediente + "</li>").join("");
+            lista += "</ul>";
+            return lista;
+        }
+
+        function getCard(receita) {
+            var card = "<div class='card'>";
+            card += "<img src='" + receita.imagem + "' class='card-img-top' alt='" + receita.titulo + "'>";
+            card += "<div class='card-body'>";
+            card += "<h5 class='card-title'>" + receita.titulo + "</h5>";
+            card += "<p class='card-text'>" + receita.preparo + "</p>";
+            card += "<h6>Ingredientes:</h6>";
+            card += getListaIngredientes(receita.ingredientes);
+            card += "</div></div>";
+            return card;
+        }
+
+        function preencheCatalogo() {
+            var pnlCatalogo = document.getElementById("pnlCatalogo");
+            receitas.forEach(receita => {
+                pnlCatalogo.innerHTML += getCard(receita);
+            });
+        }
+    </script>
+
+</body>
+</html>
+<script>
+    function getCard(receita) {
+        return `
+            <div class="card" style="width: 250px;">
+                <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                <div class="card-body">
+                    <h5 class="card-title">${receita.titulo}</h5>
+                    <div class="card-text">${getListaIngredientes(receita.ingredientes)}</div>
+                    <hr>
+                    <p>${receita.preparo}</p>
+                </div>
+            </div>
+        `;
+    }
+</script>
+<script>
+    function preencheCatalogo() {
+        var pnlCatalogo = document.getElementById("pnlCatalogo");
+        var receitasHTML = receitas.map(receita => getCard(receita)).join("");
+        pnlCatalogo.innerHTML = receitasHTML;
+    }
+</script>

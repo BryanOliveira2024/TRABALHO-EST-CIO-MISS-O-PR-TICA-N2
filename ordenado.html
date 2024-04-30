@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenação de Valores</title>
+</head>
+<body>
+    <input type="number" id="valor">
+    <button onclick="add()">Adicionar</button>
+    <select id="metodo">
+        <option value="bubbleSort" selected>Blubble Sort</option>
+        <option value="selectionSort">Selection Sort</option>
+        <option value="quickSort">Quick Sort</option>
+    </select>
+    <button onclick="ordenar()">Ordenar</button>
+    <button onclick="misturar()">Misturar</button>
+    <ul id="valores"></ul>
+
+    <script src="ordenando.js"></script>
+    <script>
+        function add() {
+            var inputValor = document.getElementById("valor").value;
+            var ul = document.getElementById("valores");
+            var node = document.createElement("li");
+            node.textContent = inputValor;
+            ul.appendChild(node);
+        }
+
+        function ordenar() {
+            var ul = document.getElementById("valores");
+            var metodo = document.getElementById("metodo");
+            var valores = Array.from(ul.children).map(li => parseInt(li.textContent));
+            if (metodo.value === "bubbleSort") {
+                valores = bubbleSort(valores);
+            } else if (metodo.value === "selectionSort") {
+                valores = selectionSort(valores);
+            } else if (metodo.value === "quickSort") {
+                valores = quickSort(valores, 0, valores.length - 1);
+            }
+            ul.innerHTML = "";
+            valores.forEach(valor => {
+                var li = document.createElement("li");
+                li.textContent = valor;
+                ul.appendChild(li);
+            });
+        }
+
+        function misturar() {
+            var ul = document.getElementById("valores");
+            var valores = Array.from(ul.children).map(li => parseInt(li.textContent));
+            shuffle(valores);
+            ul.innerHTML = "";
+            valores.forEach(valor => {
+                var li = document.createElement("li");
+                li.textContent = valor;
+                ul.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
